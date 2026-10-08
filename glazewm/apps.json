@@ -1,0 +1,106 @@
+{
+  "gaming": [
+    {
+      "name": "Chrome",
+      "processNames": ["chrome"],
+      "target": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "workspace": "1"
+    },
+    {
+      "name": "Steam",
+      "processNames": ["steam", "Steam", "steamwebhelper"],
+      "target": "C:\\Program Files (x86)\\Steam\\steam.exe",
+      "workspace": "2"
+    },
+    {
+      "name": "1Password",
+      "processNames": ["1Password"],
+      "target": "explorer.exe",
+      "args": "shell:AppsFolder\\Agilebits.1Password_amwd9z03whsfe!Agilebits.OnePassword",
+      "workspace": "5"
+    },
+    {
+      "name": "Gemini",
+      "processNames": ["Gemini", "gemini"],
+      "target": "%LOCALAPPDATA%\\Google\\Gemini\\Gemini.exe",
+      "workspace": "6"
+    },
+    {
+      "name": "Obsidian",
+      "processNames": ["Obsidian"],
+      "target": "C:\\Program Files\\Obsidian\\Obsidian.exe",
+      "workspace": "7"
+    },
+    {
+      "name": "WindowsTerminal",
+      "processNames": ["WindowsTerminal"],
+      "target": "wt",
+      "workspace": "8"
+    },
+    {
+      "name": "Discord",
+      "processNames": ["Discord"],
+      "target": "%LOCALAPPDATA%\\Discord\\Discord.exe",
+      "workspace": "9",
+      "forceTiling": true
+    }
+  ],
+  "dev": [
+    {
+      "name": "Chrome",
+      "processNames": ["chrome"],
+      "target": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "workspace": "1"
+    },
+    {
+      "name": "Antigravity",
+      "processNames": ["Antigravity"],
+      "target": "%LOCALAPPDATA%\\Programs\\Antigravity\\Antigravity.exe",
+      "workspace": "2"
+    },
+    {
+      "name": "Antigravity IDE",
+      "processNames": ["Antigravity IDE"],
+      "target": "%LOCALAPPDATA%\\Programs\\Antigravity IDE\\Antigravity IDE.exe",
+      "workspace": "3"
+    },
+    {
+      "name": "Docker Desktop",
+      "processNames": ["Docker Desktop"],
+      "target": "C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe",
+      "workspace": "4"
+    },
+    {
+      "name": "1Password",
+      "processNames": ["1Password"],
+      "target": "explorer.exe",
+      "args": "shell:AppsFolder\\Agilebits.1Password_amwd9z03whsfe!Agilebits.OnePassword",
+      "workspace": "5"
+    },
+    {
+      "name": "Gemini",
+      "processNames": ["Gemini", "gemini"],
+      "target": "%LOCALAPPDATA%\\Google\\Gemini\\Gemini.exe",
+      "workspace": "6"
+    },
+    {
+      "name": "Obsidian",
+      "processNames": ["Obsidian"],
+      "target": "C:\\Program Files\\Obsidian\\Obsidian.exe",
+      "workspace": "7"
+    },
+    {
+      "name": "WindowsTerminal",
+      "processNames": ["WindowsTerminal"],
+      "target": "wt",
+      "workspace": "8"
+    },
+    {
+      "name": "Discord",
+      "processNames": ["Discord"],
+      "target": "%LOCALAPPDATA%\\Discord\\Discord.exe",
+      "workspace": "9",
+      "forceTiling": true
+    }
+  ]
+}

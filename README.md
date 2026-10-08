@@ -14,11 +14,13 @@ C:\Users\riley\.glzr\
     ├── config.yaml                <-- Active configuration loaded by GlazeWM
     ├── config.yaml.backup         <-- Original backup of pre-migration configuration
     ├── active_profile.txt         <-- Plaintext name of currently active profile
+    ├── apps.json                  <-- Application matrix & workspace mappings
     ├── errors.log                 <-- GlazeWM error logs
     ├── profiles\                  <-- Workflow configuration profiles
     │   ├── gaming.yaml            <-- Default profile: Gaming-optimized
     │   └── dev.yaml               <-- Development profile: Code/IDE-optimized
     └── scripts\                   <-- Automation utilities
+        ├── init-apps.ps1          <-- Idempotent app initializer & window repinning engine
         ├── switch-glaze.ps1       <-- Core CLI profile switcher engine
         └── toggle-kbm.ps1         <-- PowerToys Keyboard Manager controller
 ```
@@ -56,13 +58,13 @@ Both profiles utilize a unified single-monitor 9-workspace structure:
 | **3** | *(Unassigned / Free)* | Antigravity IDE |
 | **4** | *(Unassigned / Free)* | Docker Desktop |
 | **5** | 1Password | 1Password |
-| **6** | *(Unassigned / Free)* | *(Unassigned / Free)* |
+| **6** | Gemini | Gemini |
 | **7** | Obsidian | Obsidian |
 | **8** | Windows Terminal | Windows Terminal |
 | **9** | Discord | Discord |
 | **Bar** | Zebar (persistent) | Zebar (persistent) |
 
-*All applications listed above auto-launch on startup when their respective profile is active, and their windows are automatically directed to their designated workspace via `window_rules`.*
+*All applications listed above auto-launch on startup when their respective profile is active, and their windows are automatically directed to their designated workspace via `window_rules` and `init-apps.ps1`. Startup is fully idempotent: closing and relaunching GlazeWM never spawns duplicate instances, but immediately repins and focuses all existing open windows to their correct workspaces.*
 
 ---
 
@@ -144,13 +146,17 @@ To create a new workflow profile (e.g. `reading.yaml` or `music.yaml`):
 1. **Create the profile file**:
    Save your new profile in `C:\Users\riley\.glzr\glazewm\profiles\<name>.yaml`.
    You can duplicate `gaming.yaml` or `dev.yaml` as a baseline.
-2. **(Optional) Add application launch targets**:
-   In `C:\Users\riley\.glzr\glazewm\scripts\switch-glaze.ps1`, add your profile's application entries under `$appMap`:
-   ```powershell
-   '<name>' = @(
-       @{ Name = 'Spotify'; Target = 'spotify.exe'; Workspace = 6 },
-       ...
-   )
+2. **(Optional) Add application launch targets & workspace routing**:
+   In `C:\Users\riley\.glzr\glazewm\apps.json`, add your profile's application entries under `"<name>"`:
+   ```json
+   "<name>": [
+       {
+           "name": "Spotify",
+           "processNames": ["Spotify", "spotify"],
+           "target": "%APPDATA%\\Spotify\\Spotify.exe",
+           "workspace": "6"
+       }
+   ]
    ```
 3. **Switch to your new profile**:
    Open a terminal and run:

@@ -1,20 +1,16 @@
 general:
   # Commands to run when GlazeWM starts (Development Profile).
+  # Calls init-apps.ps1 to idempotently start missing apps and repin all existing windows to their workspaces.
   startup_commands:
     [
-      'shell-exec pwsh -WindowStyle Hidden -Command "if (-not (Get-Process -Name ''zebar'' -ErrorAction SilentlyContinue)) { Start-Process ''zebar'' }"',
-      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''chrome'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''\"C:\Program Files\Google\Chrome\Application\chrome.exe\"'' }"',
-      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''Antigravity'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''\"C:\Users\riley\AppData\Local\Programs\Antigravity\Antigravity.exe\"'' }"',
-      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''Antigravity IDE'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''\"C:\Users\riley\AppData\Local\Programs\Antigravity IDE\Antigravity IDE.exe\"'' }"',
-      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''Docker Desktop'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''\"C:\Program Files\Docker\Docker\Docker Desktop.exe\"'' }"',
-      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''1Password'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''shell:AppsFolder\Agilebits.1Password_amwd9z03whsfe!Agilebits.OnePassword'' }"',
-      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''Obsidian'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''\"C:\Program Files\Obsidian\Obsidian.exe\"'' }"',
-      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''WindowsTerminal'' -ErrorAction SilentlyContinue)) { Start-Process ''wt'' }"',
-      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''Discord'' -ErrorAction SilentlyContinue)) { Start-Process ''C:\Users\riley\AppData\Local\Discord\Update.exe'' -ArgumentList ''--processStart Discord.exe'' }"'
+      'shell-exec pwsh -NoProfile -WindowStyle Hidden -File "C:\Users\riley\.glzr\glazewm\scripts\init-apps.ps1" -Profile dev'
     ]
 
   shutdown_commands: ["shell-exec taskkill /IM zebar.exe /F"]
-  config_reload_commands: []
+  config_reload_commands:
+    [
+      'shell-exec pwsh -NoProfile -WindowStyle Hidden -File "C:\Users\riley\.glzr\glazewm\scripts\init-apps.ps1" -Profile dev -RepinOnly'
+    ]
 
   focus_follows_cursor: false
   toggle_workspace_on_refocus: false
@@ -114,6 +110,11 @@ window_rules:
     match:
       - window_process: { equals: "1Password" }
 
+  - commands: ["move --workspace 6"]
+    match:
+      - window_process: { equals: "Gemini" }
+      - window_process: { equals: "gemini" }
+
   - commands: ["move --workspace 7"]
     match:
       - window_process: { equals: "Obsidian" }
@@ -122,7 +123,7 @@ window_rules:
     match:
       - window_process: { equals: "WindowsTerminal" }
 
-  - commands: ["move --workspace 9"]
+  - commands: ["set-tiling", "move --workspace 9"]
     match:
       - window_process: { equals: "Discord" }
 

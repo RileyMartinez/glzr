@@ -35,6 +35,7 @@ $activeFile = Join-Path $baseDir "active_profile.txt"
 $activeConfig = Join-Path $baseDir "config.yaml"
 $scriptsDir = Join-Path $baseDir "scripts"
 $toggleKbmScript = Join-Path $scriptsDir "toggle-kbm.ps1"
+$initAppsScript = Join-Path $scriptsDir "init-apps.ps1"
 
 if ($Help) {
     Get-Help $MyInvocation.MyCommand.Path
@@ -129,50 +130,13 @@ if ($glazeProc) {
     Write-Host "ℹ️ GlazeWM is not running. It will use '$targetName' when started." -ForegroundColor Yellow
 }
 
-# 4. Optional Application Launch Orchestration
+# 4. Application Launch & Window Repinning Orchestration
 if ($LaunchApps) {
     Write-Host "`nLaunching applications for profile '$targetName'..." -ForegroundColor Cyan
-
-    $appMap = @{
-        'gaming' = @(
-            @{ Name = 'chrome'; Target = 'C:\Program Files\Google\Chrome\Application\chrome.exe'; Workspace = 1 },
-            @{ Name = 'steam'; Target = 'C:\Program Files (x86)\Steam\steam.exe'; Workspace = 2 },
-            @{ Name = '1Password'; Target = 'explorer.exe'; Args = 'shell:AppsFolder\Agilebits.1Password_amwd9z03whsfe!Agilebits.OnePassword'; Workspace = 5 },
-            @{ Name = 'Obsidian'; Target = 'C:\Program Files\Obsidian\Obsidian.exe'; Workspace = 7 },
-            @{ Name = 'WindowsTerminal'; Target = 'wt'; Workspace = 8 },
-            @{ Name = 'Discord'; Target = "$env:LOCALAPPDATA\Discord\Update.exe"; Args = '--processStart Discord.exe'; Workspace = 9 }
-        )
-        'dev' = @(
-            @{ Name = 'chrome'; Target = 'C:\Program Files\Google\Chrome\Application\chrome.exe'; Workspace = 1 },
-            @{ Name = 'Antigravity'; Target = "$env:LOCALAPPDATA\Programs\Antigravity\Antigravity.exe"; Workspace = 2 },
-            @{ Name = 'Antigravity IDE'; Target = "$env:LOCALAPPDATA\Programs\Antigravity IDE\Antigravity IDE.exe"; Workspace = 3 },
-            @{ Name = 'Docker Desktop'; Target = 'C:\Program Files\Docker\Docker\Docker Desktop.exe'; Workspace = 4 },
-            @{ Name = '1Password'; Target = 'explorer.exe'; Args = 'shell:AppsFolder\Agilebits.1Password_amwd9z03whsfe!Agilebits.OnePassword'; Workspace = 5 },
-            @{ Name = 'Obsidian'; Target = 'C:\Program Files\Obsidian\Obsidian.exe'; Workspace = 7 },
-            @{ Name = 'WindowsTerminal'; Target = 'wt'; Workspace = 8 },
-            @{ Name = 'Discord'; Target = "$env:LOCALAPPDATA\Discord\Update.exe"; Args = '--processStart Discord.exe'; Workspace = 9 }
-        )
-    }
-
-    if ($appMap.ContainsKey($targetName)) {
-        foreach ($app in $appMap[$targetName]) {
-            $isRunning = (Get-Process -Name $app.Name -ErrorAction SilentlyContinue) -ne $null
-            if (-not $isRunning) {
-                Write-Host "  Launching $($app.Name) (Workspace $($app.Workspace))..." -ForegroundColor White
-                try {
-                    if ($app.Args) {
-                        Start-Process -FilePath $app.Target -ArgumentList $app.Args
-                    } else {
-                        Start-Process -FilePath $app.Target
-                    }
-                } catch {
-                    Write-Warning "Failed to start $($app.Name): $_"
-                }
-            } else {
-                Write-Host "  $($app.Name) is already running." -ForegroundColor Gray
-            }
-        }
-    }
+    & pwsh -NoProfile -File $initAppsScript -Profile $targetName -VerboseOutput
+} else {
+    Write-Host "`nRepinning windows for profile '$targetName'..." -ForegroundColor Cyan
+    & pwsh -NoProfile -File $initAppsScript -Profile $targetName -RepinOnly
 }
 
 Write-Host "`n Active Profile: $targetName`n" -ForegroundColor Green
