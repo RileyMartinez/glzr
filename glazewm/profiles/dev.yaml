@@ -10,7 +10,7 @@ general:
       'shell-exec pwsh -Command "if (-not (Get-Process -Name ''1Password'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''shell:AppsFolder\Agilebits.1Password_amwd9z03whsfe!Agilebits.OnePassword'' }"',
       'shell-exec pwsh -Command "if (-not (Get-Process -Name ''Obsidian'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''\"C:\Program Files\Obsidian\Obsidian.exe\"'' }"',
       'shell-exec pwsh -Command "if (-not (Get-Process -Name ''WindowsTerminal'' -ErrorAction SilentlyContinue)) { Start-Process ''wt'' }"',
-      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''Discord'' -ErrorAction SilentlyContinue)) { Start-Process ''C:\Users\riley\AppData\Local\Discord\Update.exe'' -ArgumentList ''--processStart Discord.exe'' }"'
+      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''Discord'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''\"C:\Users\riley\AppData\Local\Discord\Discord.exe\"'' }"'
     ]
 
   shutdown_commands: ["shell-exec taskkill /IM zebar.exe /F"]
@@ -122,7 +122,7 @@ window_rules:
     match:
       - window_process: { equals: "WindowsTerminal" }
 
-  - commands: ["move --workspace 9"]
+  - commands: ["set-tiling", "move --workspace 9"]
     match:
       - window_process: { equals: "Discord" }
 

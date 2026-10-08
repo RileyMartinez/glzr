@@ -140,7 +140,7 @@ if ($LaunchApps) {
             @{ Name = '1Password'; Target = 'explorer.exe'; Args = 'shell:AppsFolder\Agilebits.1Password_amwd9z03whsfe!Agilebits.OnePassword'; Workspace = 5 },
             @{ Name = 'Obsidian'; Target = 'C:\Program Files\Obsidian\Obsidian.exe'; Workspace = 7 },
             @{ Name = 'WindowsTerminal'; Target = 'wt'; Workspace = 8 },
-            @{ Name = 'Discord'; Target = "$env:LOCALAPPDATA\Discord\Update.exe"; Args = '--processStart Discord.exe'; Workspace = 9 }
+            @{ Name = 'Discord'; Target = "$env:LOCALAPPDATA\Discord\Discord.exe"; Workspace = 9 }
         )
         'dev' = @(
             @{ Name = 'chrome'; Target = 'C:\Program Files\Google\Chrome\Application\chrome.exe'; Workspace = 1 },
@@ -150,7 +150,7 @@ if ($LaunchApps) {
             @{ Name = '1Password'; Target = 'explorer.exe'; Args = 'shell:AppsFolder\Agilebits.1Password_amwd9z03whsfe!Agilebits.OnePassword'; Workspace = 5 },
             @{ Name = 'Obsidian'; Target = 'C:\Program Files\Obsidian\Obsidian.exe'; Workspace = 7 },
             @{ Name = 'WindowsTerminal'; Target = 'wt'; Workspace = 8 },
-            @{ Name = 'Discord'; Target = "$env:LOCALAPPDATA\Discord\Update.exe"; Args = '--processStart Discord.exe'; Workspace = 9 }
+            @{ Name = 'Discord'; Target = "$env:LOCALAPPDATA\Discord\Discord.exe"; Workspace = 9 }
         )
     }
 
