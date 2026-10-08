@@ -1,0 +1,266 @@
+general:
+  # Commands to run when GlazeWM starts (Gaming Profile).
+  startup_commands:
+    [
+      'shell-exec pwsh -WindowStyle Hidden -Command "if (-not (Get-Process -Name ''zebar'' -ErrorAction SilentlyContinue)) { Start-Process ''zebar'' }"',
+      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''chrome'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''\"C:\Program Files\Google\Chrome\Application\chrome.exe\"'' }"',
+      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''steam'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''\"C:\Program Files (x86)\Steam\steam.exe\"'' }"',
+      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''1Password'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''shell:AppsFolder\Agilebits.1Password_amwd9z03whsfe!Agilebits.OnePassword'' }"',
+      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''Obsidian'' -ErrorAction SilentlyContinue)) { Start-Process ''explorer.exe'' ''\"C:\Program Files\Obsidian\Obsidian.exe\"'' }"',
+      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''WindowsTerminal'' -ErrorAction SilentlyContinue)) { Start-Process ''wt'' }"',
+      'shell-exec pwsh -Command "if (-not (Get-Process -Name ''Discord'' -ErrorAction SilentlyContinue)) { Start-Process ''C:\Users\riley\AppData\Local\Discord\Update.exe'' -ArgumentList ''--processStart Discord.exe'' }"'
+    ]
+
+  shutdown_commands: ["shell-exec taskkill /IM zebar.exe /F"]
+  config_reload_commands: []
+
+  focus_follows_cursor: false
+  toggle_workspace_on_refocus: false
+
+  cursor_jump:
+    enabled: true
+    trigger: "monitor_focus"
+
+  hide_method: "cloak"
+  show_all_in_taskbar: false
+
+gaps:
+  scale_with_dpi: true
+  inner_gap: "0px"
+  outer_gap:
+    top: "40px"
+    right: "0px"
+    bottom: "0px"
+    left: "0px"
+
+window_effects:
+  focused_window:
+    border:
+      enabled: true
+      color: "#8dbcff"
+    hide_title_bar:
+      enabled: false
+    corner_style:
+      enabled: false
+      style: "square"
+    transparency:
+      enabled: false
+      opacity: "95%"
+
+  other_windows:
+    border:
+      enabled: true
+      color: "#a1a1a1"
+    hide_title_bar:
+      enabled: false
+    corner_style:
+      enabled: false
+      style: "square"
+    transparency:
+      enabled: false
+      opacity: "0%"
+
+window_behavior:
+  initial_state: "tiling"
+  state_defaults:
+    floating:
+      centered: true
+      shown_on_top: false
+    fullscreen:
+      maximized: false
+      shown_on_top: false
+
+# Single monitor setup: Workspaces 1 through 9
+workspaces:
+  - name: "1"
+    keep_alive: true
+  - name: "2"
+    keep_alive: true
+  - name: "3"
+    keep_alive: true
+  - name: "4"
+    keep_alive: true
+  - name: "5"
+    keep_alive: true
+  - name: "6"
+    keep_alive: true
+  - name: "7"
+    keep_alive: true
+  - name: "8"
+    keep_alive: true
+  - name: "9"
+    keep_alive: true
+
+window_rules:
+  - commands: ["move --workspace 1"]
+    match:
+      - window_process: { equals: "chrome" }
+
+  - commands: ["move --workspace 2"]
+    match:
+      - window_process: { equals: "steam" }
+      - window_process: { equals: "Steam" }
+
+  - commands: ["move --workspace 5"]
+    match:
+      - window_process: { equals: "1Password" }
+
+  - commands: ["move --workspace 7"]
+    match:
+      - window_process: { equals: "Obsidian" }
+
+  - commands: ["move --workspace 8"]
+    match:
+      - window_process: { equals: "WindowsTerminal" }
+
+  - commands: ["move --workspace 9"]
+    match:
+      - window_process: { equals: "Discord" }
+
+  - commands: ["ignore"]
+    match:
+      # Zebar and browser picture-in-picture
+      - window_process: { equals: "zebar" }
+      - window_title: { regex: "[Pp]icture.in.[Pp]icture" }
+        window_class: { regex: "Chrome_WidgetWin_1|MozillaDialogClass" }
+
+      # PowerToys & system utilities
+      - window_process: { equals: "PowerToys" }
+        window_class: { regex: 'HwndWrapper\[PowerToys\.PowerAccent.*?\]' }
+      - window_process: { equals: "PowerToys" }
+        window_title: { regex: ".*? - Peek" }
+      - window_process: { equals: "Lively" }
+        window_class: { regex: "HwndWrapper" }
+
+      # Game overlays, launchers, and borderless games
+      - window_process: { equals: "Riot Client" }
+      - window_process: { equals: "RiotClientServices" }
+      - window_process: { equals: "EADesktop" }
+      - window_process: { equals: "EpicGamesLauncher" }
+      - window_process: { equals: "Battle.net" }
+      - window_process: { equals: "NVIDIA Overlay" }
+
+binding_modes:
+  - name: "resize"
+    keybindings:
+      - commands: ["resize --width -2%"]
+        bindings: ["h", "left"]
+      - commands: ["resize --width +2%"]
+        bindings: ["l", "right"]
+      - commands: ["resize --height +2%"]
+        bindings: ["k", "up"]
+      - commands: ["resize --height -2%"]
+        bindings: ["j", "down"]
+      - commands: ["wm-disable-binding-mode --name resize"]
+        bindings: ["escape", "enter"]
+
+# Gaming Profile Keybindings: Alt + Caps Lock
+# Leaves bare Alt, Alt+1..9, Alt+WASD free for video games.
+keybindings:
+  # Focus navigation
+  - commands: ["focus --direction left"]
+    bindings: ["alt+caps_lock+h", "alt+caps_lock+left", "alt+ctrl+h", "alt+ctrl+left"]
+  - commands: ["focus --direction right"]
+    bindings: ["alt+caps_lock+l", "alt+caps_lock+right", "alt+ctrl+l", "alt+ctrl+right"]
+  - commands: ["focus --direction up"]
+    bindings: ["alt+caps_lock+k", "alt+caps_lock+up", "alt+ctrl+k", "alt+ctrl+up"]
+  - commands: ["focus --direction down"]
+    bindings: ["alt+caps_lock+j", "alt+caps_lock+down", "alt+ctrl+j", "alt+ctrl+down"]
+
+  # Window movement
+  - commands: ["move --direction left"]
+    bindings: ["alt+caps_lock+shift+h", "alt+caps_lock+shift+left", "alt+ctrl+shift+h", "alt+ctrl+shift+left"]
+  - commands: ["move --direction right"]
+    bindings: ["alt+caps_lock+shift+l", "alt+caps_lock+shift+right", "alt+ctrl+shift+l", "alt+ctrl+shift+right"]
+  - commands: ["move --direction up"]
+    bindings: ["alt+caps_lock+shift+k", "alt+caps_lock+shift+up", "alt+ctrl+shift+k", "alt+ctrl+shift+up"]
+  - commands: ["move --direction down"]
+    bindings: ["alt+caps_lock+shift+j", "alt+caps_lock+shift+down", "alt+ctrl+shift+j", "alt+ctrl+shift+down"]
+
+  # Resizing
+  - commands: ["resize --width -2%"]
+    bindings: ["alt+caps_lock+u", "alt+ctrl+u"]
+  - commands: ["resize --width +2%"]
+    bindings: ["alt+caps_lock+y", "alt+ctrl+y"]
+  - commands: ["resize --height +2%"]
+    bindings: ["alt+caps_lock+o", "alt+ctrl+o"]
+  - commands: ["resize --height -2%"]
+    bindings: ["alt+caps_lock+i", "alt+ctrl+i"]
+  - commands: ["wm-enable-binding-mode --name resize"]
+    bindings: ["alt+caps_lock+r", "alt+ctrl+r"]
+
+  # One-touch gaming pause toggle (suspends all window management & bindings)
+  - commands: ["wm-toggle-pause"]
+    bindings: ["alt+caps_lock+p", "alt+ctrl+p"]
+
+  # Toggle PowerToys Keyboard Manager directly via hotkey (works whether KBM is ON or OFF)
+  - commands: ['shell-exec pwsh -WindowStyle Hidden -File "C:\Users\riley\.glzr\glazewm\scripts\toggle-kbm.ps1"']
+    bindings: ["alt+caps_lock+k", "alt+ctrl+k"]
+
+  # Window state controls
+  - commands: ["toggle-tiling-direction"]
+    bindings: ["alt+caps_lock+v", "alt+ctrl+v"]
+  - commands: ["wm-cycle-focus"]
+    bindings: ["alt+caps_lock+c", "alt+ctrl+c"]
+  - commands: ["toggle-floating --centered"]
+    bindings: ["alt+caps_lock+shift+space", "alt+ctrl+shift+space"]
+  - commands: ["toggle-tiling"]
+    bindings: ["alt+caps_lock+t", "alt+ctrl+t"]
+  - commands: ["toggle-fullscreen"]
+    bindings: ["alt+caps_lock+f", "alt+ctrl+f"]
+  - commands: ["toggle-minimized"]
+    bindings: ["alt+caps_lock+m", "alt+ctrl+m"]
+  - commands: ["close"]
+    bindings: ["alt+caps_lock+shift+q", "alt+ctrl+shift+q"]
+
+  # GlazeWM process controls
+  - commands: ["wm-exit"]
+    bindings: ["alt+caps_lock+shift+e", "alt+ctrl+shift+e"]
+  - commands: ["wm-reload-config"]
+    bindings: ["alt+caps_lock+shift+r", "alt+ctrl+shift+r"]
+  - commands: ["wm-redraw"]
+    bindings: ["alt+caps_lock+shift+w", "alt+ctrl+shift+w"]
+
+  # Launch Terminal
+  - commands: ["shell-exec wt"]
+    bindings: ["alt+caps_lock+enter", "alt+ctrl+enter"]
+
+  # Workspace focus: Alt + Caps Lock + 1..9 (and Alt + Ctrl + 1..9 when KBM is active)
+  - commands: ["focus --workspace 1"]
+    bindings: ["alt+caps_lock+1", "alt+ctrl+1"]
+  - commands: ["focus --workspace 2"]
+    bindings: ["alt+caps_lock+2", "alt+ctrl+2"]
+  - commands: ["focus --workspace 3"]
+    bindings: ["alt+caps_lock+3", "alt+ctrl+3"]
+  - commands: ["focus --workspace 4"]
+    bindings: ["alt+caps_lock+4", "alt+ctrl+4"]
+  - commands: ["focus --workspace 5"]
+    bindings: ["alt+caps_lock+5", "alt+ctrl+5"]
+  - commands: ["focus --workspace 6"]
+    bindings: ["alt+caps_lock+6", "alt+ctrl+6"]
+  - commands: ["focus --workspace 7"]
+    bindings: ["alt+caps_lock+7", "alt+ctrl+7"]
+  - commands: ["focus --workspace 8"]
+    bindings: ["alt+caps_lock+8", "alt+ctrl+8"]
+  - commands: ["focus --workspace 9"]
+    bindings: ["alt+caps_lock+9", "alt+ctrl+9"]
+
+  # Move window to workspace: Alt + Caps Lock + Shift + 1..9
+  - commands: ["move --workspace 1", "focus --workspace 1"]
+    bindings: ["alt+caps_lock+shift+1", "alt+ctrl+shift+1"]
+  - commands: ["move --workspace 2", "focus --workspace 2"]
+    bindings: ["alt+caps_lock+shift+2", "alt+ctrl+shift+2"]
+  - commands: ["move --workspace 3", "focus --workspace 3"]
+    bindings: ["alt+caps_lock+shift+3", "alt+ctrl+shift+3"]
+  - commands: ["move --workspace 4", "focus --workspace 4"]
+    bindings: ["alt+caps_lock+shift+4", "alt+ctrl+shift+4"]
+  - commands: ["move --workspace 5", "focus --workspace 5"]
+    bindings: ["alt+caps_lock+shift+5", "alt+ctrl+shift+5"]
+  - commands: ["move --workspace 6", "focus --workspace 6"]
+    bindings: ["alt+caps_lock+shift+6", "alt+ctrl+shift+6"]
+  - commands: ["move --workspace 7", "focus --workspace 7"]
+    bindings: ["alt+caps_lock+shift+7", "alt+ctrl+shift+7"]
+  - commands: ["move --workspace 8", "focus --workspace 8"]
+    bindings: ["alt+caps_lock+shift+8", "alt+ctrl+shift+8"]
+  - commands: ["move --workspace 9", "focus --workspace 9"]
+    bindings: ["alt+caps_lock+shift+9", "alt+ctrl+shift+9"]
