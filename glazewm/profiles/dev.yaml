@@ -224,6 +224,10 @@ keybindings:
   - commands: ["shell-exec wt"]
     bindings: ["alt+enter"]
 
+  # Toggle between most recent workspaces
+  - commands: ["focus --recent-workspace"]
+    bindings: ["alt+d"]
+
   # Workspace focus: Alt + 1..9
   - commands: ["focus --workspace 1"]
     bindings: ["alt+1"]

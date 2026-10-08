@@ -107,6 +107,7 @@ set-kbm off
 | Action | Gaming Profile (`gaming.yaml`) | Development Profile (`dev.yaml`) |
 | :--- | :--- | :--- |
 | **Focus Workspace 1–9** | `Alt + Caps Lock + [1..9]` | `Alt + [1..9]` |
+| **Focus Recent Workspace** | `Alt + Caps Lock + D` | `Alt + D` |
 | **Move Window to Space 1–9** | `Alt + Caps Lock + Shift + [1..9]` | `Alt + Shift + [1..9]` |
 | **Directional Focus** | `Alt + Caps Lock + [H/J/K/L]` (or arrows) | `Alt + [H/J/K/L]` (or arrows) |
 | **Directional Move** | `Alt + Caps Lock + Shift + [H/J/K/L]` | `Alt + Shift + [H/J/K/L]` |
